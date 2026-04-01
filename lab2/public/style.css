@@ -12,7 +12,7 @@ h1 {
     color: #1e293b;
     text-align: center;
     margin-top: 0;
-    margin-bottom: 15px; 
+    margin-bottom: 15px;
     font-size: 32px;
     font-weight: 600;
 }
@@ -20,7 +20,7 @@ h1 {
 .description {
     text-align: center;
     font-size: 18px;
-    color: #64748b; 
+    color: #64748b;
     margin-bottom: 35px;
 }
 
@@ -62,7 +62,96 @@ li a {
 }
 
 li a:hover {
-    background-color: #f1f5f9; 
-    color: #2563eb; 
-    text-decoration: none; 
+    background-color: #f1f5f9;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+/* Team grid styles */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.team-member {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.member-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #e2e8f0;
+}
+
+.team-member h3 {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.team-member .role {
+    color: #64748b;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* Profile page styles */
+.member-profile {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.profile-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 4px solid #e2e8f0;
+}
+
+.member-info {
+    flex: 1;
+}
+
+.member-info h2 {
+    margin-top: 0;
+    color: #1e293b;
+}
+
+.member-info p {
+    margin: 10px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .member-profile {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-photo {
+        width: 150px;
+        height: 150px;
+    }
+
+    .team-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
 }

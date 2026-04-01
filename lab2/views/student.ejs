@@ -8,7 +8,19 @@
 <body>
     <h1>Сторінка студента</h1>
 
-    <h2><%= name %></h2>
+    <div class="member-profile">
+        <img src="<%= member.photo %>" alt="<%= member.name %>" class="profile-photo">
+        <div class="member-info">
+            <h2><%= member.name %></h2>
+            <p><strong>Роль:</strong> <%= member.role %></p>
+            <p><strong>Вік:</strong> <%= member.age %> років</p>
+            <p><strong>Місто народження:</strong> <%= member.cityOfBirth %></p>
+            <p><strong>Telegram:</strong> <a href="https://t.me/<%= member.telegram.substring(1) %>" target="_blank"><%= member.telegram %></a></p>
+            <p><strong>Email:</strong> <a href="mailto:<%= member.email %>"><%= member.email %></a></p>
+            <p><strong>Біографія:</strong> <%= member.bio %></p>
+            <p><strong>Навички:</strong> <%= member.skills.join(', ') %></p>
+        </div>
+    </div>
 
     <a href="/">Назад до головної сторінки</a>
 </body>
