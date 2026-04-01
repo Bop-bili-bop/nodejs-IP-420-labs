@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { teamMembers } = require('./data');
+const { teamMembers } = require('../utils/data');
 
 router.get("/:name", (req, res) => {
     const studentName = req.params.name;
