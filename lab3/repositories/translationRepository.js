@@ -8,8 +8,7 @@ const getAll = async () => {
         const data = await fs.readFile(filePath, 'utf8');
         return JSON.parse(data);
     } catch (err) {
-        console.error("Помилка завантаження перекладів:", err);
-        throw err;
+        console.error("Помилка завантаження перекладів:", err); 
     }
 };
 

@@ -6,7 +6,7 @@ const filePath = path.join(__dirname, '../data/words.json');
 const getAll = () => {
     return fs.readFile(filePath, 'utf8')
         .then(data => JSON.parse(data))
-        .catch(err => { throw err; });
-};
+        .catch(err => { consol.log(err) });
+}
 
 module.exports = { getAll };
