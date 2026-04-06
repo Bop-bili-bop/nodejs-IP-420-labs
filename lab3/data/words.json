@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "text": "apple",
+    "langId": 1
+  },
+  {
+    "id": 2,
+    "text": "book",
+    "langId": 1
+  },
+  {
+    "id": 3,
+    "text": "яблуко",
+    "langId": 2
+  },
+  {
+    "id": 4,
+    "text": "книга",
+    "langId": 2
+  }
+]
