@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "dictionaryId": 1,
+    "sourceWordId": 1,
+    "targetWordId": 3
+  },
+  {
+    "id": 2,
+    "dictionaryId": 1,
+    "sourceWordId": 2,
+    "targetWordId": 4
+  },
+  {
+    "id": 3,
+    "dictionaryId": 2,
+    "sourceWordId": 3,
+    "targetWordId": 1
+  }
+]

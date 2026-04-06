@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Англо-український",
+    "sourceLangId": 1,
+    "targetLangId": 2
+  },
+  {
+    "id": 2,
+    "name": "Українсько-англійський",
+    "sourceLangId": 2,
+    "targetLangId": 1
+  }
+]
