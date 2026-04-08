@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "dictionaryId": 1,
+        "text": "hello"
+    },
+    {
+        "id": 2,
+        "dictionaryId": 1,
+        "text": "world"
+    },
+    {
+        "id": 3,
+        "dictionaryId": 1,
+        "text": "book"
+    },
+    {
+        "id": 4,
+        "dictionaryId": 2,
+        "text": "hello"
+    },
+    {
+        "id": 5,
+        "dictionaryId": 2,
+        "text": "water"
+    },
+    {
+        "id": 6,
+        "dictionaryId": 3,
+        "text": "Buch"
+    }
+]

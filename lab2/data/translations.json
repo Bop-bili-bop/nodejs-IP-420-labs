@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "wordId": 1,
+        "translatedText": "привіт"
+    },
+    {
+        "id": 2,
+        "wordId": 2,
+        "translatedText": "світ"
+    },
+    {
+        "id": 3,
+        "wordId": 3,
+        "translatedText": "книга"
+    },
+    {
+        "id": 4,
+        "wordId": 4,
+        "translatedText": "hola"
+    },
+    {
+        "id": 5,
+        "wordId": 5,
+        "translatedText": "agua"
+    },
+    {
+        "id": 6,
+        "wordId": 6,
+        "translatedText": "livre"
+    }
+]
