@@ -10,7 +10,7 @@ class LanguageController {
       const languages = this.service.findAll();
       res.render("languages", { languages });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).render("error", { error: error.message });
     }
   }
 
@@ -18,11 +18,11 @@ class LanguageController {
     try {
       const language = this.service.findOne(req.params.id);
       if (!language) {
-        return res.status(404).json({ error: "Language not found" });
+        return res.status(404).render("error", { error: "Language not found" });
       }
       res.json(language);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).render("error", { error: error.message });
     }
   }
 
@@ -31,7 +31,7 @@ class LanguageController {
       const language = this.service.create(req.body);
       res.status(201).json(language);
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(400).render("error", { error: error.message });
     }
   }
 
@@ -41,9 +41,9 @@ class LanguageController {
       res.json(language);
     } catch (error) {
       if (error.message === "Language not found") {
-        return res.status(404).json({ error: error.message });
+        return res.status(404).render("error", { error: error.message });
       }
-      res.status(400).json({ error: error.message });
+      res.status(400).render("error", { error: error.message });
     }
   }
 
@@ -53,9 +53,9 @@ class LanguageController {
       res.json(language);
     } catch (error) {
       if (error.message === "Language not found") {
-        return res.status(404).json({ error: error.message });
+        return res.status(404).render("error", { error: error.message });
       }
-      res.status(500).json({ error: error.message });
+      res.status(500).render("error", { error: error.message });
     }
   }
 }
