@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Вибір словника</title>
+</head>
+<body>
+    <h1>Доступні словники</h1>
+    <ul>
+        <% if (dictionaries && dictionaries.length > 0) { %>
+            <% dictionaries.forEach(function(dict) { %>
+                <li>
+                    <strong><%= dict.name %></strong> <br>
+                    <small>(ID мови оригіналу: <%= dict.sourceLangId %>, ID цільової мови: <%= dict.targetLangId %>)</small>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <li>Словники відсутні</li>
+        <% } %>
+    </ul>
+    <br>
+    <a href="/">На головну</a>
+</body>
+</html>
