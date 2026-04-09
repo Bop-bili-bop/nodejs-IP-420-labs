@@ -5,6 +5,60 @@ class TranslationController {
         this.service = service;
     }
 
+    async getTranslations(req, res) {
+        try {
+            const translations = await this.service.findAll();
+            res.json(translations);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async getTranslationById(req, res) {
+        try {
+            const translation = await this.service.findOne(req.params.id);
+            if (!translation) {
+                return res.status(404).json({ error: 'Translation not found' });
+            }
+            res.json(translation);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async createTranslation(req, res) {
+        try {
+            const translation = await this.service.create(req.body);
+            res.status(201).json(translation);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    async updateTranslation(req, res) {
+        try {
+            const translation = await this.service.update(req.params.id, req.body);
+            res.json(translation);
+        } catch (error) {
+            if (error.message === 'Translation not found') {
+                return res.status(404).json({ error: error.message });
+            }
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    async deleteTranslation(req, res) {
+        try {
+            const translation = await this.service.delete(req.params.id);
+            res.json(translation);
+        } catch (error) {
+            if (error.message === 'Translation not found') {
+                return res.status(404).json({ error: error.message });
+            }
+            res.status(500).json({ error: error.message });
+        }
+    }
+
     async getTranslation(req, res) {
         try {
             const { word, lang } = req.query;
