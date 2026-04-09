@@ -7,15 +7,42 @@ class TranslationService {
         this.translationRepository = translationRepo;
     }
 
-    findAll() { }
+    async findAll() {
+        return await this.translationRepository.findAll();
+    }
 
-    findOne() { }
+    async findOne(id) {
+        return await this.translationRepository.findOne(id);
+    }
 
-    create() { }
+    async create(data) {
+        if (!data.dictionaryId || !data.sourceWordId || !data.targetWordId) {
+            throw new Error("Translation dictionaryId, sourceWordId and targetWordId are required");
+        }
+        return await this.translationRepository.create(data);
+    }
 
-    update() { }
+    async update(id, data) {
+        if (!id) {
+            throw new Error("Translation ID is required");
+        }
+        const result = await this.translationRepository.update(id, data);
+        if (!result) {
+            throw new Error("Translation not found");
+        }
+        return result;
+    }
 
-    delete() { }
+    async delete(id) {
+        if (!id) {
+            throw new Error("Translation ID is required");
+        }
+        const result = await this.translationRepository.delete(id);
+        if (!result) {
+            throw new Error("Translation not found");
+        }
+        return result;
+    }
 
     async translate(wordText, targetLangId) {
         const [words, translations] = await Promise.all([
