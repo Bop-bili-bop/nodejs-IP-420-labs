@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Помилка</title>
+</head>
+<body>
+    <h1>Помилка</h1>
+    
+    <div>
+        <p><strong>Виникла помилка:</strong></p>
+        <p style="color: red;">
+            <% if (typeof error === 'string') { %>
+                <%= error %>
+            <% } else if (error && error.message) { %>
+                <%= error.message %>
+            <% } else { %>
+                Невідома помилка
+            <% } %>
+        </p>
+    </div>
+
+    <hr>
+
+    <p><a href="/">Повернутися на головну сторінку</a></p>
+</body>
+</html>
+
