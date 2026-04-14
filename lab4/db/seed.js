@@ -16,7 +16,7 @@ async function seedDatabase() {
         [lang.id, lang.name],
       );
     }
-    console.log("✅ Мови завантажено.");
+    console.log("Мови завантажено.");
 
     for (const word of words) {
       await pool.query(
@@ -24,7 +24,7 @@ async function seedDatabase() {
         [word.id, word.text, word.langId, word.description],
       );
     }
-    console.log("✅ Слова завантажено.");
+    console.log("Слова завантажено.");
 
     for (const dict of dictionaries) {
       await pool.query(
@@ -32,7 +32,7 @@ async function seedDatabase() {
         [dict.id, dict.name, dict.sourceLangId, dict.targetLangId],
       );
     }
-    console.log("✅ Словники завантажено.");
+    console.log("Словники завантажено.");
 
     for (const tr of translations) {
       await pool.query(
@@ -40,7 +40,7 @@ async function seedDatabase() {
         [tr.id, tr.dictionaryId, tr.sourceWordId, tr.targetWordId],
       );
     }
-    console.log("✅ Переклади завантажено.");
+    console.log("Переклади завантажено.");
     await pool.query(
       "SELECT setval('languages_id_seq', (SELECT MAX(id) FROM languages))",
     );
@@ -53,11 +53,11 @@ async function seedDatabase() {
     await pool.query(
       "SELECT setval('translations_id_seq', (SELECT MAX(id) FROM translations))",
     );
-    console.log("✅ Послідовності оновлено.");
+    console.log("Послідовності оновлено.");
 
-    console.log("🎉 Дані успішно завантажено!");
+    console.log("Дані успішно завантажено!");
   } catch (error) {
-    console.error("❌ Помилка під час завантаження даних:", error);
+    console.error("Помилка під час завантаження даних:", error);
   } finally {
     await pool.end();
   }
