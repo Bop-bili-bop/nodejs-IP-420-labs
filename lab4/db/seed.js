@@ -3,7 +3,7 @@ const { readJsonAsync } = require("../utils/fileLoaders");
 
 async function seedDatabase() {
   try {
-    console.log("⏳ Починаємо завантаження даних до бази...");
+    console.log("Починаємо завантаження даних до бази...");
 
     const languages = await readJsonAsync("data/languages.json");
     const words = await readJsonAsync("data/words.json");
