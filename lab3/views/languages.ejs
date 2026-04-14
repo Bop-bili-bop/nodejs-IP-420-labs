@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Вибір мови</title>
+</head>
+<body>
+    <h1>Доступні мови</h1>
+    <ul>
+        <% if (languages && languages.length > 0) { %>
+            <% languages.forEach(function(lang) { %>
+                <li>ID: <%= lang.id %> — <strong><%= lang.name %></strong></li>
+            <% }); %>
+        <% } else { %>
+            <li>Мови відсутні</li>
+        <% } %>
+    </ul>
+    <br>
+    <a href="/">На головну</a>
+</body>
+</html>

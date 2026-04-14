@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перелік слів</title>
+</head>
+<body>
+    <h1>Усі слова в базі</h1>
+    
+    <ul>
+        <% if (words && words.length > 0) { %>
+            <% words.forEach(function(wordItem) { %>
+                <li>
+                    ID: <%= wordItem.id %> — <strong><%= wordItem.text %></strong>
+                    <small>(ID мови: <%= wordItem.langId %>)</small>
+                    <% if (wordItem.description) { %>
+                        <br><em><%= wordItem.description %></em>
+                    <% } %>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <li>Слова відсутні</li>
+        <% } %>
+    </ul>
+    
+    <br>
+    <a href="/">На головну</a>
+</body>
+</html>

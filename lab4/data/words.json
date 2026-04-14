@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "text": "apple",
+    "langId": 1,
+    "description": "A round fruit with red or green skin"
+  },
+  {
+    "id": 2,
+    "text": "book",
+    "langId": 1,
+    "description": "A written or printed work consisting of pages"
+  },
+  {
+    "id": 3,
+    "text": "яблуко",
+    "langId": 2,
+    "description": "Кругла фрукта з червоною або зеленою шкіркою"
+  },
+  {
+    "id": 4,
+    "text": "книга",
+    "langId": 2,
+    "description": "Друкований або рукописний твір із сторінок"
+  },
+  {
+    "id": 5,
+    "text": "кабан",
+    "langId": 2,
+    "description": "Дикий свиноподібний ссавець"
+  },
+  {
+    "id": 6,
+    "text": "boar",
+    "langId": 1,
+    "description": "A wild pig-like mammal"
+  }
+]

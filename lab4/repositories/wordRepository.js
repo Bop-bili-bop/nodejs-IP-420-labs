@@ -20,7 +20,8 @@ class WordRepository {
 			const newWord = {
 				id: Date.now(),
 				text: word.text,
-				langId: word.langId
+				langId: word.langId,
+				description: word.description || ""
 			};
 
 			items.push(newWord);
@@ -38,7 +39,8 @@ class WordRepository {
 			const updatedWord = {
 				...items[index],
 				text: word.text || items[index].text,
-				langId: word.langId || items[index].langId
+				langId: word.langId || items[index].langId,
+				description: word.description !== undefined ? word.description : items[index].description
 			};
 
 			items[index] = updatedWord;

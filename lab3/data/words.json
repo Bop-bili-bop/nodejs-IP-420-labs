@@ -18,5 +18,15 @@
     "id": 4,
     "text": "книга",
     "langId": 2
+  },
+  {
+    "id": 5,
+    "text": "кабан",
+    "langId": 2
+  },
+  {
+    "id": 6,
+    "text": "boar",
+    "langId": 1
   }
 ]
