@@ -1,5 +1,6 @@
 const WordRepository = require('../repositories/wordRepository');
 const TranslationRepository = require('../repositories/translationRepository');
+const UnitOfWork = require('../db/UnitOfWork');
 
 class TranslationService {
     constructor() {
@@ -54,6 +55,44 @@ class TranslationService {
         if (targetLangId && targetWord.langId !== parseInt(targetLangId)) return null;
 
         return targetWord.text;
+    }
+
+    async addWordWithTranslationAtomically(sourceWordData, targetWordData, dictionaryId) {
+        const uow = new UnitOfWork();
+        await uow.start(); 
+
+        try {
+            const client = uow.getClient();
+
+            const transactionalWordRepo = new WordRepository(client);
+            const transactionalTranslationRepo = new TranslationRepository(client);
+
+            const sourceWord = await transactionalWordRepo.create({
+                text: sourceWordData.text,
+                langId: sourceWordData.langId,
+                description: sourceWordData.description || ""
+            });
+
+            const targetWord = await transactionalWordRepo.create({
+                text: targetWordData.text,
+                langId: targetWordData.langId,
+                description: targetWordData.description || ""
+            });
+
+            const translation = await transactionalTranslationRepo.create({
+                dictionaryId: dictionaryId,
+                sourceWordId: sourceWord.id,
+                targetWordId: targetWord.id
+            });
+
+            await uow.commit(); 
+            
+            return { sourceWord, targetWord, translation };
+
+        } catch (error) {
+            await uow.rollback(); 
+            throw new Error(`Транзакцію скасовано через помилку: ${error.message}`);
+        }
     }
 
 }

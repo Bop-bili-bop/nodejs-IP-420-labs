@@ -1,5 +1,5 @@
 
-const dbPool = require('./db/db'); 
+const dbPool = require('./db'); 
 
 class UnitOfWork {
     constructor() {
