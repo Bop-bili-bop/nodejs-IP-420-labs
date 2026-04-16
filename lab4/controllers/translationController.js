@@ -82,6 +82,18 @@ class TranslationController {
       res.status(500).render("error", { error: "Помилка сервера" });
     }
   }
+
+  async createComplexTranslation(req, res) {
+    try {
+        const { sourceWord, targetWord, dictionaryId } = req.body;
+        const result = await this.service.addWordWithTranslationAtomically(
+            sourceWord, targetWord, dictionaryId
+        );
+        res.status(201).json(result);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = new TranslationController();

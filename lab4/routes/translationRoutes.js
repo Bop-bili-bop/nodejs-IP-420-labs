@@ -8,6 +8,7 @@ router.get('/translations/:id', translationController.getTranslationById.bind(tr
 router.post('/translations', translationController.createTranslation.bind(translationController));
 router.put('/translations/:id', translationController.updateTranslation.bind(translationController));
 router.delete('/translations/:id', translationController.deleteTranslation.bind(translationController));
+router.post('/translations/complex', translationController.createComplexTranslation.bind(translationController));
 
 module.exports = router;
 
