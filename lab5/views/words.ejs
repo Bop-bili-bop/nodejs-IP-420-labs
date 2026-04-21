@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перелік слів</title>
+</head>
+<body>
+    <h1>Усі слова в базі</h1>
+
+    <ul>
+        <% if (words && words.length > 0) { %>
+            <% words.forEach(function(wordItem) { %>
+                <li>
+                    ID: <%= wordItem.id %> — <strong><%= wordItem.text %></strong>
+                    <small>(ID мови: <%= wordItem.langId %>)</small>
+                    <% if (wordItem.description) { %>
+                        <br><em><%= wordItem.description %></em>
+                    <% } %>
+
+                    <form action="/words/<%= wordItem.id %>/delete" method="POST" style="display:inline; margin-left: 10px;">
+                        <button type="submit" onclick="return confirm('Ви впевнені, що хочете видалити це слово?')">Видалити</button>
+                    </form>
+
+                    <a href="/words/<%= wordItem.id %>/edit" style="margin-left: 10px;">Редагувати</a>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <li>Слова відсутні</li>
+        <% } %>
+    </ul>
+
+    <br>
+    <a href="/">На головну</a>
+
+    <hr>
+    <h2>Додати нове слово</h2>
+    <form action="/words" method="POST">
+        <label for="text">Текст слова:</label>
+        <input type="text" id="text" name="text" required>
+        <br><br>
+
+        <label for="langId">ID мови (наприклад, 1 для English):</label>
+        <input type="number" id="langId" name="langId" required>
+        <br><br>
+
+        <label for="description">Опис (необов'язково):</label>
+        <input type="text" id="description" name="description">
+        <br><br>
+
+        <button type="submit">Створити слово</button>
+    </form>
+</body>
+</html>

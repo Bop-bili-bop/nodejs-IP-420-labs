@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Редагувати слово</title>
+</head>
+<body>
+    <h1>Редагувати слово</h1>
+
+    <form action="/words/<%= word.id %>/update" method="POST">
+        <label>Текст слова:</label>
+        <input type="text" name="text" value="<%= word.text %>" required>
+        <br><br>
+
+        <label>ID мови:</label>
+        <input type="number" name="langId" value="<%= word.langId %>" required>
+        <br><br>
+
+        <label>Опис:</label>
+        <input type="text" name="description" value="<%= word.description %>">
+        <br><br>
+
+        <button type="submit">Зберегти зміни</button>
+    </form>
+
+    <br>
+    <a href="/words">Скасувати і повернутися</a>
+</body>
+</html>
