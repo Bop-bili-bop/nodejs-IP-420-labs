@@ -1,35 +1,31 @@
-const WordRepository = require('../repositories/wordRepository');
+const wordRepository = require("../repositories/wordRepository");
+const { sequelize } = require("../models");
 
 class WordService {
-  constructor() {
-    this.repository = new WordRepository();
-  }
-
   async findAll() {
-    return this.repository.findAll();
+    return await wordRepository.findAll();
   }
 
   async findOne(id) {
-    return this.repository.findOne(id);
+    return await wordRepository.findOne(id);
   }
 
   async create(data) {
-    if (!data.text || !data.langId) throw new Error("Word text and langId are required");
-    return this.repository.create(data);
+    return await sequelize.transaction(async (t) => {
+      return await wordRepository.create(data, { transaction: t });
+    });
   }
 
   async update(id, data) {
-    if (!id) throw new Error("Word ID is required");
-    const result = await this.repository.update(id, data);
-    if (!result) throw new Error("Word not found");
-    return result;
+    return await sequelize.transaction(async (t) => {
+      return await wordRepository.update(id, data, { transaction: t });
+    });
   }
 
   async delete(id) {
-    if (!id) throw new Error("Word ID is required");
-    const result = await this.repository.delete(id);
-    if (!result) throw new Error("Word not found");
-    return result;
+    return await sequelize.transaction(async (t) => {
+      return await wordRepository.delete(id, { transaction: t });
+    });
   }
 }
 

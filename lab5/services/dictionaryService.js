@@ -1,37 +1,31 @@
-const DictionaryRepository = require('../repositories/dictionaryRepository');
+const dictionaryRepository = require("../repositories/dictionaryRepository");
+const { sequelize } = require("../models");
 
 class DictionaryService {
-  constructor() {
-    this.repository = new DictionaryRepository();
-  }
-
   async findAll() {
-    return this.repository.findAll();
+    return await dictionaryRepository.findAll();
   }
 
   async findOne(id) {
-    return this.repository.findOne(id);
+    return await dictionaryRepository.findOne(id);
   }
 
   async create(data) {
-    if (!data.name || !data.sourceLangId || !data.targetLangId) {
-      throw new Error("Dictionary name, sourceLangId and targetLangId are required");
-    }
-    return this.repository.create(data);
+    return await sequelize.transaction(async (t) => {
+      return await dictionaryRepository.create(data, { transaction: t });
+    });
   }
 
   async update(id, data) {
-    if (!id) throw new Error("Dictionary ID is required");
-    const result = await this.repository.update(id, data);
-    if (!result) throw new Error("Dictionary not found");
-    return result;
+    return await sequelize.transaction(async (t) => {
+      return await dictionaryRepository.update(id, data, { transaction: t });
+    });
   }
 
   async delete(id) {
-    if (!id) throw new Error("Dictionary ID is required");
-    const result = await this.repository.delete(id);
-    if (!result) throw new Error("Dictionary not found");
-    return result;
+    return await sequelize.transaction(async (t) => {
+      return await dictionaryRepository.delete(id, { transaction: t });
+    });
   }
 }
 

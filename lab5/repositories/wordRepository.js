@@ -1,34 +1,47 @@
-const { Word } = require('../models');
+const { Word } = require("../models");
 
 class WordRepository {
-  constructor(transaction = null) {
-    this.transaction = transaction;
+  async findAll(options = {}) {
+    return await Word.findAll(options);
   }
 
-  async findAll() {
-    return Word.findAll({ transaction: this.transaction });
+  async findOne(id, options = {}) {
+    if (!id) throw new Error("ID слова є обов'язковим для пошуку");
+    return await Word.findByPk(id, options);
   }
 
-  async findOne(id) {
-    return Word.findByPk(id, { transaction: this.transaction });
+  async findByCondition(options = {}) {
+    return await Word.findOne(options);
   }
 
-  async create(data) {
-    return Word.create(data, { transaction: this.transaction });
+  async create(data, options = {}) {
+    return await Word.create(data, options);
   }
 
-  async update(id, data) {
-    const instance = await Word.findByPk(id, { transaction: this.transaction });
-    if (!instance) return null;
-    return instance.update(data, { transaction: this.transaction });
+  async update(id, data, options = {}) {
+    if (!id) throw new Error("ID слова є обов'язковим для оновлення");
+    if (!data || Object.keys(data).length === 0)
+      throw new Error("Дані для оновлення не надані");
+
+    const word = await this.findOne(id, options);
+    if (!word) {
+      throw new Error(`Слово з ID ${id} не знайдено`);
+    }
+
+    return await word.update(data, options);
   }
 
-  async delete(id) {
-    const instance = await Word.findByPk(id, { transaction: this.transaction });
-    if (!instance) return null;
-    await instance.destroy({ transaction: this.transaction });
-    return instance;
+  async delete(id, options = {}) {
+    if (!id) throw new Error("ID слова є обов'язковим для видалення");
+
+    const word = await this.findOne(id, options);
+    if (!word) {
+      throw new Error(`Слово з ID ${id} не знайдено`);
+    }
+
+    await word.destroy(options);
+    return true;
   }
 }
 
-module.exports = WordRepository;
+module.exports = new WordRepository();
