@@ -6,5 +6,10 @@
     "node": "^25.8.2",
     "pg": "^8.20.0",
     "sequelize": "^6.37.5"
-  }
+  },
+  
+  "scripts": {
+  "start": "node lab5/server.js",
+  "seed": "node lab5/db/seed.js"
+}
 }
