@@ -1,36 +1,31 @@
-const LanguageRepository = require('../repositories/languageRepository');
+const languageRepository = require("../repositories/languageRepository");
+const { sequelize } = require("../models");
 
 class LanguageService {
-  constructor() {
-    this.repository = new LanguageRepository();
-  }
-
   async findAll() {
-    return this.repository.findAll();
+    return await languageRepository.findAll();
   }
 
   async findOne(id) {
-    return this.repository.findOne(id);
+    return await languageRepository.findOne(id);
   }
 
   async create(data) {
-    if (!data.name) throw new Error("Language name is required");
-    return this.repository.create(data);
+    return await sequelize.transaction(async (t) => {
+      return await languageRepository.create(data, { transaction: t });
+    });
   }
 
   async update(id, data) {
-    if (!id) throw new Error("Language ID is required");
-    if (!data.name) throw new Error("Language name is required");
-    const language = await this.repository.update(id, data);
-    if (!language) throw new Error("Language not found");
-    return language;
+    return await sequelize.transaction(async (t) => {
+      return await languageRepository.update(id, data, { transaction: t });
+    });
   }
 
   async delete(id) {
-    if (!id) throw new Error("Language ID is required");
-    const language = await this.repository.delete(id);
-    if (!language) throw new Error("Language not found");
-    return language;
+    return await sequelize.transaction(async (t) => {
+      return await languageRepository.delete(id, { transaction: t });
+    });
   }
 }
 

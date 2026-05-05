@@ -1,34 +1,43 @@
-const { Dictionary } = require('../models');
+const { Dictionary } = require("../models");
 
 class DictionaryRepository {
-  constructor(transaction = null) {
-    this.transaction = transaction;
+  async findAll(options = {}) {
+    return await Dictionary.findAll(options);
   }
 
-  async findAll() {
-    return Dictionary.findAll({ transaction: this.transaction });
+  async findOne(id, options = {}) {
+    if (!id) throw new Error("ID словника є обов'язковим для пошуку");
+    return await Dictionary.findByPk(id, options);
   }
 
-  async findOne(id) {
-    return Dictionary.findByPk(id, { transaction: this.transaction });
+  async create(data, options = {}) {
+    return await Dictionary.create(data, options);
   }
 
-  async create(data) {
-    return Dictionary.create(data, { transaction: this.transaction });
+  async update(id, data, options = {}) {
+    if (!id) throw new Error("ID словника є обов'язковим для оновлення");
+    if (!data || Object.keys(data).length === 0)
+      throw new Error("Дані для оновлення не надані");
+
+    const dictionary = await this.findOne(id, options);
+    if (!dictionary) {
+      throw new Error(`Словник з ID ${id} не знайдено`);
+    }
+
+    return await dictionary.update(data, options);
   }
 
-  async update(id, data) {
-    const instance = await Dictionary.findByPk(id, { transaction: this.transaction });
-    if (!instance) return null;
-    return instance.update(data, { transaction: this.transaction });
-  }
+  async delete(id, options = {}) {
+    if (!id) throw new Error("ID словника є обов'язковим для видалення");
 
-  async delete(id) {
-    const instance = await Dictionary.findByPk(id, { transaction: this.transaction });
-    if (!instance) return null;
-    await instance.destroy({ transaction: this.transaction });
-    return instance;
+    const dictionary = await this.findOne(id, options);
+    if (!dictionary) {
+      throw new Error(`Словник з ID ${id} не знайдено`);
+    }
+
+    await dictionary.destroy(options);
+    return true;
   }
 }
 
-module.exports = DictionaryRepository;
+module.exports = new DictionaryRepository();
