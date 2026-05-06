@@ -7,6 +7,9 @@ const wordRoutes = require("./routes/wordRoutes");
 const dictionaryRoutes = require("./routes/dictionaryRoutes");
 const translationRoutes = require("./routes/translationRoutes");
 
+const apiRouter = require("./routes/api/index");
+const apiErrorHandler = require("./middleware/apiErrorHandler");
+
 const app = express();
 const PORT = process.env.PORT || 3005;
 
@@ -21,6 +24,9 @@ app.use("/", languageRoutes);
 app.use("/", wordRoutes);
 app.use("/", dictionaryRoutes);
 app.use("/", translationRoutes);
+
+app.use("/api/v1", apiRouter);
+app.use("/api/v1", apiErrorHandler);
 
 sequelize
   .authenticate()
