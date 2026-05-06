@@ -2,16 +2,31 @@ const express = require('express');
 const router = express.Router();
 const wordService = require('../../services/wordService');
 
+// POST /api/v1/words
+router.post('/', async (req, res, next) => {
+  try {
+    const createdWord = await wordService.create(req.body);
+    res.status(201).json(createdWord);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// GET /api/v1/words
+router.get('/', async (req, res, next) => {
+  try {
+    const result = await wordService.findAll(req.query);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // GET /api/v1/words/:id
 router.get('/:id', async (req, res, next) => {
   try {
     const data = await wordService.findOne(req.params.id);
-    if (!data) {
-      const err = new Error('Слово не знайдено');
-      err.statusCode = 404;
-      return next(err);
-    }
-    res.json(data);
+    res.status(200).json(data);
   } catch (err) {
     next(err);
   }
@@ -20,10 +35,9 @@ router.get('/:id', async (req, res, next) => {
 // PUT /api/v1/words/:id
 router.put('/:id', async (req, res, next) => {
   try {
-    await wordService.update(req.params.id, req.body);
-    res.json({ message: 'Слово успішно оновлено' });
+    const updatedWord = await wordService.update(req.params.id, req.body);
+    res.status(200).json(updatedWord);
   } catch (err) {
-    err.statusCode = 400;
     next(err);
   }
 });
@@ -32,7 +46,7 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await wordService.delete(req.params.id);
-    res.json({ message: 'Слово успішно видалено' });
+    res.status(204).send();
   } catch (err) {
     next(err);
   }

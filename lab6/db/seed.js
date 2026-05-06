@@ -11,6 +11,9 @@ const loadData = (fileName) => {
 async function seedDatabase() {
   try {
     console.log("Починаємо завантаження даних до бази через Sequelize...");
+    await sequelize.authenticate();
+    await sequelize.sync();
+    console.log("Схему БД синхронізовано.");
 
     const languages = loadData("languages.json");
     const words = loadData("words.json");
