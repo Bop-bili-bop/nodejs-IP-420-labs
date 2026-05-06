@@ -1,12 +1,17 @@
 const { Word } = require("../models");
+const { createHttpError } = require("../utils/errors");
 
 class WordRepository {
   async findAll(options = {}) {
     return await Word.findAll(options);
   }
 
+  async findAndCountAll(options = {}) {
+    return await Word.findAndCountAll(options);
+  }
+
   async findOne(id, options = {}) {
-    if (!id) throw new Error("ID слова є обов'язковим для пошуку");
+    if (!id) throw createHttpError("ID слова є обов'язковим для пошуку", 400);
     return await Word.findByPk(id, options);
   }
 
@@ -19,24 +24,24 @@ class WordRepository {
   }
 
   async update(id, data, options = {}) {
-    if (!id) throw new Error("ID слова є обов'язковим для оновлення");
+    if (!id) throw createHttpError("ID слова є обов'язковим для оновлення", 400);
     if (!data || Object.keys(data).length === 0)
-      throw new Error("Дані для оновлення не надані");
+      throw createHttpError("Дані для оновлення не надані", 400);
 
     const word = await this.findOne(id, options);
     if (!word) {
-      throw new Error(`Слово з ID ${id} не знайдено`);
+      throw createHttpError(`Слово з ID ${id} не знайдено`, 404);
     }
 
     return await word.update(data, options);
   }
 
   async delete(id, options = {}) {
-    if (!id) throw new Error("ID слова є обов'язковим для видалення");
+    if (!id) throw createHttpError("ID слова є обов'язковим для видалення", 400);
 
     const word = await this.findOne(id, options);
     if (!word) {
-      throw new Error(`Слово з ID ${id} не знайдено`);
+      throw createHttpError(`Слово з ID ${id} не знайдено`, 404);
     }
 
     await word.destroy(options);

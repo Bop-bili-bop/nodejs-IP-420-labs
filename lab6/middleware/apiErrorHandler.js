@@ -7,7 +7,8 @@ function apiErrorHandler(err, req, res, next) {
   res.status(statusCode).json({
     error: {
       message: message,
-      details: err.details || null
+      details: err.details || null,
+      code: statusCode
     }
   });
 }
