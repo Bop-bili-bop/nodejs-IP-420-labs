@@ -1,6 +1,8 @@
 const translationRepository = require("../repositories/translationRepository");
 const wordRepository = require("../repositories/wordRepository");
-const { sequelize, Word } = require("../models");
+const { sequelize } = require("../models");
+const { parsePositiveInt } = require("../utils/helpers");
+const { createHttpError } = require("../utils/errors");
 
 class TranslationService {
   async findAll() {
@@ -8,24 +10,46 @@ class TranslationService {
   }
 
   async findOne(id) {
-    return await translationRepository.findOne(id);
+    const parsedId = parsePositiveInt(id);
+    if (!parsedId)
+      throw createHttpError("Translation id must be a positive integer", 400);
+
+    const translation = await translationRepository.findOne(parsedId);
+    if (!translation) throw createHttpError("Translation not found", 404);
+
+    return translation;
   }
 
   async create(data) {
+    if (!data?.dictionaryId || !data?.sourceWordId || !data?.targetWordId) {
+      throw createHttpError(
+        "dictionaryId, sourceWordId and targetWordId are required",
+        400,
+      );
+    }
+
     return await sequelize.transaction(async (t) => {
       return await translationRepository.create(data, { transaction: t });
     });
   }
 
   async update(id, data) {
+    const parsedId = parsePositiveInt(id);
+    if (!parsedId)
+      throw createHttpError("Translation id must be a positive integer", 400);
+
     return await sequelize.transaction(async (t) => {
-      return await translationRepository.update(id, data, { transaction: t });
+      return await translationRepository.update(parsedId, data, { transaction: t });
     });
   }
 
   async delete(id) {
+    const parsedId = parsePositiveInt(id);
+    if (!parsedId)
+      throw createHttpError("Translation id must be a positive integer", 400);
+
     return await sequelize.transaction(async (t) => {
-      return await translationRepository.delete(id, { transaction: t });
+      return await translationRepository.delete(parsedId, { transaction: t });
     });
   }
 
@@ -43,13 +67,17 @@ class TranslationService {
     });
     if (!translationEntry) return null;
 
-    const targetWord = await wordRepository.findOne(
-      translationEntry.targetWordId,
-    );
+    const targetWord = await wordRepository.findOne(translationEntry.targetWordId);
     if (!targetWord) return null;
 
-    if (targetLangId && targetWord.langId !== parseInt(targetLangId)) {
-      return null;
+    if (targetLangId) {
+      const parsedLangId = parsePositiveInt(targetLangId);
+      if (!parsedLangId) {
+        throw createHttpError("query param 'lang' must be a positive integer", 400);
+      }
+      if (targetWord.langId !== parsedLangId) {
+        return null;
+      }
     }
 
     return targetWord.text;
